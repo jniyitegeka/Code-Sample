@@ -5,9 +5,8 @@
 ## Overview
 - This repository contains sample scripts in Stata and Python that demonstrate my experience with data analysis, statistical modeling, and machine learning.
 Each script represents a sample of my work.
+- **_Yellow markdown annotations in python code_** to clarify my contributions since I was not the sole contributor
 
-- If I was not the sole contributor, I have included Yellow markdown annotations to clarify my contributions.
-                                                     ---
 ---
 
 ### 📌 1️⃣ Stata
