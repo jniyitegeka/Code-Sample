@@ -7,7 +7,7 @@
 Each script represents a sample of my work.
 
 - If I was not the sole contributor, I have included Yellow markdown annotations to clarify my contributions.
-                                                     ============================
+                                                     ---
 ---
 
 ### 📌 1️⃣ Stata
