@@ -11,7 +11,7 @@ Each script represents a sample of my work. If I was not the sole contributor, I
 ### 1️⃣ Stata: `analysis_script.do`
 - Performs regression analysis and summary statistics on survey data.
 - Annotated with comments explaining methodology.
-- [View Script](Econ-970-Final-Project/score.do)
+- [View Script](https://github.com/jniyitegeka/Econ-970-Final-Project/blob/main/score.do)
 
 ### 2️⃣ Python: `machine_learning_model.py`
 - Implements a simple linear regression model using `scikit-learn`.
