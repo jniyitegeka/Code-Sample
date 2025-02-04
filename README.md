@@ -16,4 +16,4 @@ Each script represents a sample of my work. If I was not the sole contributor, I
 ### 2️⃣ Python: `machine_learning_model.py`
 - Implements a simple linear regression model using `scikit-learn`.
 - Includes preprocessing, model training, and evaluation.
-- [View Script](python_code/machine_learning_model.py)
+- [View Script](https://github.com/jniyitegeka/CS109A-Data-Science/blob/main/milestone_5.ipynb)
