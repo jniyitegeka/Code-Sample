@@ -43,6 +43,7 @@ Train and evaluate **machine learning models** that classify **headline sentimen
    - Created **sentiment word-based features** (flags, counts, and density ratios).
 2. **Model Training**
    - Trained and tested Linear Regression, Decision Tree
+     
 📌 **[View Script](milestone_5.ipynb)**
 
 ---
