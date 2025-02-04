@@ -15,11 +15,6 @@ Each script represents a sample of my work.
 #### **Data Analysis Objective**  
 This study evaluates whether state-level student loan informational provision bills, aimed at enhancing transparency and borrower awareness, have reduced default rates. The **Callaway and Sant’Anna Difference-in-Differences (CSDID)** method is applied, and the analysis finds no significant impact on default rates as of 2021.
 
-#### **Overview**
-- This file contains the **analysis code** for my **final project**, which uses the **College Scorecard dataset (2011-2022)** to evaluate institutional performance and the factors influencing student outcomes.
-- Focuses on **institution-level** data, including **costs, student demographics, graduation rates, and 3-year student loan default rates**, primarily for institutions participating in **federal Title IV financial aid programs**.
-- **Data sources**: **IPEDS, NSLDS, and federal tax records** to track institutional performance over time.
-
 #### **Sections**
 1. **Cleaning**
    - Addressing data limitations (e.g., discontinuation of the 2-year default rate after 2011).
@@ -35,14 +30,12 @@ This study evaluates whether state-level student loan informational provision bi
 ---
 
 ### 📌 2️⃣ Python
-**Headline Sentiment Classification & Clickbait Detection**  
+** Final Project Data Analysis - CS109B: Headline Sentiment Classification & Clickbait Detection**  
 
 #### **Objective**  
 Train and evaluate **machine learning models** that classify **headline sentiment** (positive, neutral, or negative) and detect **clickbait** using engineered text features.
 
-#### **Overview**
-- Dataset consists of **news headlines** with **sentiment scores** (classified as negative ≤ -0.2, neutral -0.2 to 0.4, positive ≥ 0.4).
-- **Feature engineering**
+#### **NOTE**
 - **Yellow markdown annotations** indicate the code I wrote.
 
 #### **Methodology**
