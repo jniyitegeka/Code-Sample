@@ -53,10 +53,10 @@ Train and evaluate **machine learning models** that classify **headline sentimen
 ### **Objective**  
 Train and evaluate a **Vision Transformer (ViT)** model to classify **hand-drawn sketches** from the Quick, Draw! dataset using deep learning techniques.
 
-### NOTE  
+### **NOTE** 
 - Group project.
 
-### Methodology  
+### **Methodology**  
 1. **Image Preprocessing**  
    - Resized and normalized grayscale sketches  
    - Converted image files into ViT-compatible format  
