@@ -47,3 +47,29 @@ Train and evaluate **machine learning models** that classify **headline sentimen
 📌 **[View Script](milestone_5.ipynb)**
 
 ---
+## 📌 3️⃣ Python  
+**Final Project Data Analysis - CS109B: Quick, Draw! Image Classification with Vision Transformers**
+
+### 🧠 Objective  
+Train and evaluate a **Vision Transformer (ViT)** model to classify **hand-drawn sketches** from the Quick, Draw! dataset using deep learning techniques.
+
+### 📝 NOTE  
+- Group project.
+
+### 🛠️ Methodology  
+1. **Image Preprocessing**  
+   - Resized and normalized grayscale sketches  
+   - Converted image files into ViT-compatible format  
+
+2. **Model Training**  
+   - Fine-tuned a **pretrained Vision Transformer** using Hugging Face's `transformers` library  
+   - Tuned hyperparameters: learning rate, batch size, optimizer, epochs  
+   - Applied data augmentation to improve model robustness  
+
+3. **Evaluation**  
+   - Measured model accuracy and validation loss  
+   - Analyzed confusion matrices to assess misclassification patterns  
+
+📌 **[View Script](ms5.ipynb)**
+
+---
