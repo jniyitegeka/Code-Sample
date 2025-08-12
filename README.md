@@ -30,7 +30,7 @@ This study evaluates whether state-level student loan informational provision bi
 ---
 
 ### 📌 2️⃣ Python
-**Final Project Data Analysis - CS109B: Headline Sentiment Classification & Clickbait Detection**  
+**Final Project Data Analysis - CS109A: Headline Sentiment Classification & Clickbait Detection**  
 
 #### **Objective**  
 Train and evaluate **machine learning models** that classify **headline sentiment** (positive, neutral, or negative) and detect **clickbait** using engineered text features.
