@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/jules/Downloads/ps3/output/ps3.log
+  log type:  text
+ opened on:  14 Mar 2025, 12:18:59
+
+. 
+. 
+. **Q2: loading dataset with bin variable restrictions
+. 
+. use "rawdata/irssoi_county.dta" if bin == "All" | bin == "$100,000 under $200,000" | bin == "$200,000 or more"
+(Gregory Bruich, Ph.D. (gbruich@fas.harvard.edu))
+
+. sort CountyFIPS
+
+. 
+end of do-file
+
+. do "/var/folders/7s/2jdh2p195rl16_3vrqh5qn7r0000gn/T//SD01944.000000"
+
+. * Jules Niyitegeka
+. * Tobin Center
+. * Data Task 2025
+. 
+. version 18
+
+. clear all
+
+. capture log close
