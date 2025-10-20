@@ -47,7 +47,7 @@ This module examines how capital gains realizations respond to changes in capita
 
 ---
 
-### 📊 Final Project Data Analysis – Econ 970 (STATA)
+### **Final Project Data Analysis**
 
 #### **Data Analysis Objective**
 This study evaluates whether state-level student loan informational provision bills, aimed at enhancing transparency and borrower awareness, have reduced default rates. The **Callaway and Sant’Anna Difference-in-Differences (CSDID)** method is applied, and the analysis finds no significant impact on default rates as of 2021.
