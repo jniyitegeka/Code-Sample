@@ -1,0 +1,499 @@
+---------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/jules/Downloads/ps1/output/ps1.log
+  log type:  text
+ opened on:  27 Sep 2024, 21:49:36
+
+. 
+. /*Grading comments: Great work overall! Good job labeling questions and explaining what each chun
+> k of code is doing; this will be useful for future psets and research. Also, good work in setting
+>  up and closing your log file! 
+> 
+> ***Q10 (+1.5/2): use a "merge m:1" command here in place of "merge 1:1" for flexibility
+> - a 1:1 merge is only used when both datasets have exactly one observation per key variable acros
+> s data sets. A 1:1 merge assumes that both datasets have exactly one observation per zip5. This i
+> s rarely the case in real-world data, especially when dealing with aggregated data like IRS recor
+> ds (which may contain multiple entries per ZIP code based on income brackets) and social data fro
+> m Facebook (which might have one observation per ZIP code).
+> - use m:1 merge for flexibility: m:1 merge is designed to handle situations where the master data
+> set (the IRS dataset in this case) may contain multiple observations for each key value (zip5), w
+> hile the using dataset (the Facebook data) has only one observation per key value. This is often 
+> the correct assumption in real-world data, especially when working with aggregated social or geog
+> raphic data.
+> 
+> ***Q12: limiting to _merge == 3 make is not necessary; be sure to check for misisng values
+> - Since the task is only to summarize agi_per_return for ZIP codes with above-average volunteerin
+> g rates, there's no explicit requirement to restrict the analysis to matched observations from bo
+> th datasets. The focus is on ensuring that missing values in volunteering_rate are handled correc
+> tly.
+> - Using _merge == 3 unnecessarily limits the analysis to only the matched observations. This step
+>  is not required, as the key condition is simply that volunteering_rate is above the mean and not
+>  missing.
+> 
+> You could try approaching Q12 this way:
+> - Instead of hardcoding the volunteer rate, you can add flexibility in the case of data changes b
+> y doing this:
+> // Step 1: Calculate the mean of volunteering_rate
+> summarize volunteering_rate
+> local mean_volunteering_rate = r(mean)
+> 
+> - To check for missing values, include the "!=." condition
+> // Step 2: Summarize agi_per_return for bin == "All" in ZIP codes with above-average volunteering
+> _rate, excluding missing values
+> mean agi_per_return if bin == "All" & volunteering_rate > `mean_volunteering_rate' & volunteering
+> _rate != .
+> 
+> ***Q14 and Q15: the _merge == 3 condition is not neccesary. Also, add ",robust" or , "r" to the e
+> nd of your regression line for robust standard errors
+> - this ensures that the standard errors are valid even in the presence of heteroskedasticity or m
+> ild violations of OLS assumptions. It leads to more reliable hypothesis tests, confidence interva
+> ls, and inference, protecting your results from common issues like heteroskedasticity or model mi
+> sspecification
+> - no deductions, just something to keep in mind going forward
+> 
+> */
+. 
+. 
+. **1 loading datasets
+. import delimited "rawdata/irs2015.csv", clear
+(encoding automatically selected: ISO-8859-1)
+(136 vars, 191,387 obs)
+
+. sort zip5
+
+. **2 reporting number of observations and variables
+. describe
+
+Contains data
+ Observations:       191,387                  
+    Variables:           136                  
+---------------------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------
+year            int     %8.0g                 
+state           str2    %9s                   
+zip5            long    %12.0g                
+cz              long    %12.0g                
+cz_name         str22   %22s                  
+bin             str23   %23s                  
+returns         str6    %9s                   
+returns_single  str6    %9s                   
+returns_joint   str6    %9s                   
+returns_heads   str6    %9s                   
+returns_prepa~r str6    %9s                   
+exemptions      str7    %9s                   
+dependents      str6    %9s                   
+vpr_number      str5    %9s                   
+vita_number     str5    %9s                   
+tce_number      str5    %9s                   
+vitaeitc_number str3    %9s                   
+refundloan_nu~r str3    %9s                   
+refundcheck_n~r str6    %9s                   
+elderly_number  str6    %9s                   
+agi             str10   %10s                  
+totinc_number   str6    %9s                   
+totincome_amo~t str10   %10s                  
+wages_number    str6    %9s                   
+wages_amount    str9    %9s                   
+interest_number str6    %9s                   
+interest_amount str7    %9s                   
+dividends_ord~r str6    %9s                   
+dividends_ord~t str9    %9s                   
+dividends_qua~r str6    %9s                   
+dividends_qua~t str9    %9s                   
+state_refunds~r str6    %9s                   
+state_refunds~t str7    %9s                   
+business_number str6    %9s                   
+business_amount str7    %9s                   
+capgains_number str6    %9s                   
+capgains_amount str9    %9s                   
+ira_distribut~r str5    %9s                   
+ira_distribut~t str7    %9s                   
+pensions_number str5    %9s                   
+pensions_amount str7    %9s                   
+farm_number     str5    %9s                   
+ui_number       str5    %9s                   
+ui_amount       str6    %9s                   
+socsec_number   str5    %9s                   
+socsec_amount   str7    %9s                   
+partnership_n~r str5    %9s                   
+partnership_a~t str9    %9s                   
+adjustments_n~r str6    %9s                   
+adjustments_a~t str7    %9s                   
+educatorexp_n~r str5    %9s                   
+educatorexp_a~t str3    %9s                   
+selfemp_number  str5    %9s                   
+selfemp_amount  str6    %9s                   
+selfhealthins~r str5    %9s                   
+selfhealthins~t str6    %9s                   
+irapayment_nu~r str5    %9s                   
+irapayment_am~t str5    %9s                   
+studentloan_n~r str5    %9s                   
+studentloan_a~t str6    %9s                   
+tuition_number  str3    %9s                   
+tuition_amount  str5    %9s                   
+domesticprod_~r str3    %9s                   
+domesticprod_~t str6    %9s                   
+deductions_nu~r str6    %9s                   
+deductions_am~t str9    %9s                   
+deductions_ag~t str10   %10s                  
+stateinctax_n~r str6    %9s                   
+stateinctax_a~t str9    %9s                   
+salestax_number str6    %9s                   
+salestax_amount str6    %9s                   
+proptax_number  str6    %9s                   
+proptax_amount  str7    %9s                   
+taxpaid_number  str6    %9s                   
+taxpaid_amount  str9    %9s                   
+mortint_number  str6    %9s                   
+mortint_amount  str7    %9s                   
+contrib_number  str6    %9s                   
+contrib_amount  str7    %9s                   
+ti_number       str6    %9s                   
+ti_amount       str10   %10s                  
+inctax_before~r str6    %9s                   
+inctax_before~t str9    %9s                   
+altmintax_num~r str5    %9s                   
+altmintax_amo~t str7    %9s                   
+excess_advpre~r str5    %9s                   
+excess_advpre~t str5    %9s                   
+credits_number  str6    %9s                   
+credits_amount  str7    %9s                   
+foreign_number  str5    %9s                   
+foreign_amount  str7    %9s                   
+childcare_num~r str5    %9s                   
+childcare_amo~t str5    %9s                   
+educredit_non~r str5    %9s                   
+educredit_non~t str5    %9s                   
+retcontrib_nu~r str5    %9s                   
+retcontrib_am~t str3    %9s                   
+childcredit_n~r str6    %9s                   
+childcredit_a~t str6    %9s                   
+energy_number   str5    %9s                   
+energy_amount   str5    %9s                   
+setax_number    str6    %9s                   
+setax_amount    str6    %9s                   
+totpremium_nu~r str5    %9s                   
+totpremium_am~t str6    %9s                   
+advpremium_nu~r str5    %9s                   
+advpremium_am~t str6    %9s                   
+hc_indivresp_~r str5    %9s                   
+hc_indivresp_~t str5    %9s                   
+tot_tax_number  str6    %9s                   
+tot_tax_amount  str9    %9s                   
+eitc_number     str6    %9s                   
+eitc_amount     str6    %9s                   
+eitc_excess_n~r str6    %9s                   
+eitc_excess_a~t str6    %9s                   
+addchildcredi~r str6    %9s                   
+addchildcredi~t str6    %9s                   
+educredit_num~r str5    %9s                   
+educredit_amo~t str5    %9s                   
+netpremium_nu~r str5    %9s                   
+netpremium_am~t str5    %9s                   
+inctax_number   str6    %9s                   
+inctax_amount   str9    %9s                   
+liability_num~r str6    %9s                   
+liability_amo~t str9    %9s                   
+addmedicareta~r str5    %9s                   
+addmedicareta~t str6    %9s                   
+netinvest_num~r str5    %9s                   
+netinvest_amo~t str7    %9s                   
+taxdue_number   str6    %9s                   
+taxdue_amount   str7    %9s                   
+overpay_number  str6    %9s                   
+overpay_amount  str7    %9s                   
+tot_vpr_number  str2    %9s                   
+tot_vita_number str2    %9s                   
+tot_tce_number  str2    %9s                   
+---------------------------------------------------------------------------------------------------
+Sorted by: zip5
+     Note: Dataset has changed since last saved.
+
+. 
+. //Observations: 191,387 and Variables: 136 
+. 
+. **3 keeping variables of interest
+. keep year state zip5 cz cz_name bin returns agi wages_amount interest_amount dividends_ordinary_a
+> mount dividends_qualified_amount capgains_amount contrib_amount
+
+. 
+. **4 labeling the variables of interest_amount
+. label variable year "Year"
+
+. label variable state "State"
+
+. label variable zip5 "Zip code"
+
+. label variable cz "Commuting zone"
+
+. label variable cz_name "Commuting zone name"
+
+. label variable bin "Size of adjusted gross income"
+
+. label variable returns "Number of returns"
+
+. label variable agi "Adjusted gross income (AGI) in $1000s"
+
+. label variable wages_amount "Salaries and wages in AGI Amount ($1000s)"
+
+. label variable interest_amount "Taxable interest Amount ($1000s)"
+
+. label variable dividends_ordinary_amount "Ordinary dividends Amount ($1000s)"
+
+. label variable dividends_qualified_amount "Qualified dividends Amount ($1000s)"
+
+. label variable capgains_amount "Net capital gain (less loss) in AGI Amount ($1000s)"
+
+. label variable contrib_amount "Contributions Amount ($1000s)"
+
+. 
+. **5 using tabulate to report the number (and proportion) of your sample that has each value of th
+> e variable bin.
+. tabulate bin 
+
+ Size of adjusted gross |
+                 income |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+       $1 under $25,000 |     27,341       14.29       14.29
+$100,000 under $200,000 |     27,341       14.29       28.57
+       $200,000 or more |     27,341       14.29       42.86
+  $25,000 under $50,000 |     27,341       14.29       57.14
+  $50,000 under $75,000 |     27,341       14.29       71.43
+ $75,000 under $100,000 |     27,341       14.29       85.71
+                    All |     27,341       14.29      100.00
+------------------------+-----------------------------------
+                  Total |    191,387      100.00
+
+. 
+. **6 cleaning the datasets 
+. destring agi wages_amount interest_amount dividends_ordinary_amount dividends_qualified_amount ca
+> pgains_amount contrib_amount returns, replace ignore(",**")
+agi: characters , * removed; replaced as long
+(14215 missing values generated)
+wages_amount: characters , * removed; replaced as long
+(16888 missing values generated)
+interest_amount: characters , * removed; replaced as long
+(26676 missing values generated)
+dividends_ordinary_amount: characters , * removed; replaced as long
+(34345 missing values generated)
+dividends_qualified_amount: characters , * removed; replaced as long
+(34917 missing values generated)
+capgains_amount: characters , * removed; replaced as long
+(35589 missing values generated)
+contrib_amount: characters , * removed; replaced as long
+(32510 missing values generated)
+returns: characters , * removed; replaced as long
+(14215 missing values generated)
+
+. describe agi wages_amount interest_amount dividends_ordinary_amount dividends_qualified_amount ca
+> pgains_amount contrib_amount returns
+
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+---------------------------------------------------------------------------------------------------
+agi             long    %10.0g                Adjusted gross income (AGI) in $1000s
+wages_amount    long    %10.0g                Salaries and wages in AGI Amount ($1000s)
+interest_amount long    %10.0g                Taxable interest Amount ($1000s)
+dividends_ord~t long    %10.0g                Ordinary dividends Amount ($1000s)
+dividends_qua~t long    %10.0g                Qualified dividends Amount ($1000s)
+capgains_amount long    %10.0g                Net capital gain (less loss) in AGI Amount ($1000s)
+contrib_amount  long    %10.0g                Contributions Amount ($1000s)
+returns         long    %10.0g                Number of returns
+
+. 
+. **7 creating new variable called agi_per_return
+. gen agi_per_return = agi/returns
+(15,611 missing values generated)
+
+. label variable agi_per_return "Amount of adjusted gross income per return ($1000)"
+
+. summarize agi_per_return if state == "or" & bin == "All"
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+agi_per_re~n |        346    56.40979    20.79379   23.09167    201.961
+
+. 
+. //agi_per_return for oregon state with bin with All is around $56,409.79
+. 
+. **8 keeping observations if bin is equal to All
+. drop if bin != "All"
+(164,046 observations deleted)
+
+. 
+. **9 repeating question number 7 with 2 other variables (wages_amount & contrib_amount)
+. gen wages_amount_per_return = wages_amount/returns
+
+. label variable wages_amount_per_return "Amount of wages amount per return ($1000)"
+
+. summarize wages_amount_per_return if state == "or" & bin == "All"
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+wages_amou~n |        346    35.14159    13.05045   11.70769   107.6537
+
+. 
+. //wages_amount_per_return for oregon state with bin with All is around $35,141.59
+. 
+. gen contrib_amount_per_return = contrib_amount/returns
+
+. label variable contrib_amount_per_return "Amount of Contributions Amount per returns ($1000)"
+
+. summarize contrib_amount_per_return if state == "or" & bin == "All"
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+contrib_am~n |        346    .9435961     .939117          0   13.18491
+
+. 
+. //contrib_amount_per_return for oregon state with bin with All is around $943.5961 
+. 
+. save irs2015_clean, replace
+file irs2015_clean.dta saved
+
+. 
+. **10 loading new dataset and adding new variables in existing datasets
+. 
+. // use "rawdata/socialcapital_facebook.dta", clear
+. // sort zip5
+. // save socialcapital_facebook_clean,replace
+. // duplicates report zip5
+. 
+. merge m:1 zip5 using socialcapital_facebook_clean.dta
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                         5,642
+        from master                     4,979  (_merge==1)
+        from using                        663  (_merge==2)
+
+    Matched                            22,362  (_merge==3)
+    -----------------------------------------
+
+. label variable county "County"
+
+. label variable volunteering_rate "A group which is likely to volunteer or do activism"
+
+. 
+. **11 Answering questions about the merging function
+. // _merge ==1 refers to unmatched observations found only in our  master dataset
+. // _merge ==2 refers to unmatched observations found only in our dataset we are using to add a ne
+> w variable, in this case the variable being volunteering_rate
+. // _merge ==3 refers to matched observations from master dataset and using dataset
+. 
+. // some zip codes might not have data from Facebook because of data privacy concern where the pop
+> ulation is very small and could expose individuals identity, etc
+. // some zip codes might not have data from IRS because the people in that location might not be q
+> ualified to file for tax return (in case they are poor)
+. 
+. // Number of observations with data from both facebook and irs is 22,362 
+. // Number of observations with data from just facebook is 663
+. // Number of observations with data from just irs is 4,979
+. 
+. **12  Report the mean of agi_per_return for bin == "All" in ZIP codes with above average voluntee
+> ring_rate.
+. 
+. * Step 1: Calculate the mean of volunteering_rate
+. summarize volunteering_rate
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+volunteeri~e |     23,025    .0767584    .0368806   .0020487     .56266
+
+. local mean_volunteering_rate = r(mean)
+
+. 
+. // Step 2: Summarize agi_per_return for bin == "All" in ZIP codes with above-average volunteering
+> _rate, excluding missing values
+. mean agi_per_return if bin == "All" & volunteering_rate > `mean_volunteering_rate' & volunteering
+> _rate != .
+
+Mean estimation                            Number of obs = 9,614
+
+----------------------------------------------------------------
+               |       Mean   Std. err.     [95% conf. interval]
+---------------+------------------------------------------------
+agi_per_return |   66.06109   .4267381       65.2246    66.89759
+----------------------------------------------------------------
+
+. // The mean of agi_per_return for bin == "All" in ZIP codes with above average volunteering_rate 
+> is $66,061
+. 
+. **13 saving the final dataset as a stata data file in the "output" folder.
+. 
+. save "output/IRS_Facebook_dataset.dta", replace
+file output/IRS_Facebook_dataset.dta saved
+
+. 
+. **14 Estimating regression of volunteering_rate on agi_per_return
+. regress volunteering_rate agi_per_return, r
+
+Linear regression                               Number of obs     =     22,362
+                                                F(1, 22360)       =      58.25
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0033
+                                                Root MSE          =     .03687
+
+--------------------------------------------------------------------------------
+               |               Robust
+volunteering~e | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+---------------+----------------------------------------------------------------
+agi_per_return |   .0000435   5.70e-06     7.63   0.000     .0000323    .0000547
+         _cons |   .0741543   .0004595   161.38   0.000     .0732536    .0750549
+--------------------------------------------------------------------------------
+
+. 
+. //The household with high income have high volunteering rate because with $1000 there is  0.00435
+>  percentage points increase in the volunteering rate holding other variable constant
+. // Moreover, since our confidence interval [.0000323,.0000547] does not include zero, we conclude
+>  that the coefficient for agi_per_return is statistically significant. This means there is strong
+>  evidence to suggest that agi_per_return (income) has an impact on the volunteering rate (volunte
+> ering_rate).
+. 
+. **15 Add the variables you created in question 9 to the regression.
+. regress volunteering_rate agi_per_return wages_amount_per_return contrib_amount_per_return, r
+
+Linear regression                               Number of obs     =     22,362
+                                                F(3, 22358)       =      36.85
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0258
+                                                Root MSE          =     .03646
+
+-------------------------------------------------------------------------------------------
+                          |               Robust
+        volunteering_rate | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------------+----------------------------------------------------------------
+           agi_per_return |   .0003979   .0000485     8.20   0.000     .0003028     .000493
+  wages_amount_per_return |  -.0003132   .0000457    -6.85   0.000    -.0004028   -.0002237
+contrib_amount_per_return |  -.0062926   .0011434    -5.50   0.000    -.0085337   -.0040516
+                    _cons |   .0721374   .0009771    73.83   0.000     .0702222    .0740525
+-------------------------------------------------------------------------------------------
+
+. 
+. //The positive coefficient of 0.0003979 indicates that for every additional $1,000 in adjusted gr
+> oss income per return, the volunteering rate increases by approximately 0.04 percentage points, h
+> olding other factors constant. Since the 95% confidence interval [.0003028, .000493] does not inc
+> lude zero, the impact of agi_per_return is statistically significant at the 5% level. 
+. 
+. **16 saving my do.file
+. 
+. 
+. 
+. 
+end of do-file
+
+. cd "/Users/jules/Downloads/ps2/dofiles"
+/Users/jules/Downloads/ps2/dofiles
+
+. do "/var/folders/7s/2jdh2p195rl16_3vrqh5qn7r0000gn/T//SD01122.000000"
+
+. * Jules Niyitegeka
+. * PSET2
+. * Econ 970
+. version 17
+
+. clear all
+
+. capture log close
