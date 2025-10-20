@@ -1,0 +1,40 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/jules/Downloads/ps2/output/JulesNiyitegeka_ps2.log
+  log type:  text
+ opened on:  17 Oct 2024, 01:12:50
+
+. 
+. ***Q1: importing datasets using forvalues
+. forvalues i = 2012/2015 {
+  2.     clear
+  3.     import delimited "rawdata/irs`i'.csv"
+  4.     gen irs = `i'
+  5.     save "rawdata/irs`i'.dta", replace
+  6. }
+(encoding automatically selected: ISO-8859-1)
+(135 vars, 192,073 obs)
+file rawdata/irs2012.dta saved
+(encoding automatically selected: ISO-8859-1)
+(135 vars, 191,856 obs)
+file rawdata/irs2013.dta saved
+(encoding automatically selected: ISO-8859-1)
+(135 vars, 191,772 obs)
+file rawdata/irs2014.dta saved
+(encoding automatically selected: ISO-8859-1)
+(135 vars, 191,743 obs)
+file rawdata/irs2015.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/7s/2jdh2p195rl16_3vrqh5qn7r0000gn/T//SD43472.000000"
+
+. * Jules Niyitegeka
+. * PSET3
+. * Econ 970
+. version 17
+
+. clear all
+
+. capture log close
