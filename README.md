@@ -5,11 +5,17 @@
 ## Overview
 - This repository contains sample scripts in Stata and Python that demonstrate my experience with data analysis, statistical modeling, and machine learning.  
 - Each script represents a sample of my work.  
-- **_Yellow markdown annotations in Python code_** clarify my contributions since I was not the sole contributor.
 
 ---
+### 📌 1️⃣ Project: How Busy Is The MAC?
 
-### 📌 1️⃣ Stata Hands-On Modules: Econ 970 (STATA)
+This project analyzed Harvard’s gym check-in data to identify peak usage times, helping inform facility management decisions.
+
+**Tools:** Python, pandas, matplotlib  
+**Data:** 30,000+ anonymized gym check-ins  
+**Read the full project:** [How Busy Is The MAC? (HODP)](https://www.hodp.org/project/how-busy-is-the-mac/)
+
+### 📌 2️⃣ Stata Hands-On Modules: Econ 970 (STATA)
 
 #### **Module 1: Quantifying the Determinants of Social Capital using IRS and Facebook Data**
 This section explores geocoded administrative data from the Internal Revenue Service (IRS) for 2009–2015 to study the determinants of social capital and volunteering rates. By combining IRS data with newly released Facebook data, this module introduces data construction, cleaning, regression analysis, and visualization.  
@@ -66,7 +72,7 @@ This study evaluates whether state-level student loan informational provision bi
 
 ---
 
-### 📌 2️⃣ Python  
+### 📌 3️⃣ Python  
 #### **Final Project Data Analysis – CS109A: Headline Sentiment Classification & Clickbait Detection**
 
 #### **Objective**
